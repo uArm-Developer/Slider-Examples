@@ -45,8 +45,11 @@ void setup() {
   //Serial2.write("M2122 V1\n");                 // <! report when finish the movemnet
   Serial2.write("G2202 N3 V90\n");              // <! set effect-end servo angle
   Serial2.write("G0 X180 Y0 Z160 F2000000\n");  // <! move to start position
-
-  tcs.begin();                                   // <! init color sensor
+                   
+  if( !tcs.begin() ){                            // <! init color sensor
+    Serial.print( "color sensor error!" );
+  }
+  
   lcd.begin(16, 2);                             // <!  init 1602 LCD 
   lcd.setRGB(0, 0, 255);
   lcd.print("  guide rail  ");
