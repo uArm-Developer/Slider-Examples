@@ -164,7 +164,7 @@ bool is_green(uint16_t r, uint16_t g, uint16_t b){    // <! is the green block?
   if( (r<500) || (r>1500) ){
     return false;
   }
-  if( (g<800) || (g>1800) ){
+  if( (g<1000) || (g>1800) ){
     return false;
   }
   if( (b<200) || (b>1500) ){
@@ -248,3 +248,8 @@ void loop() {
     lcd.print("        ");
   }
 }
+/*
+  Serial.print("R: "); Serial.print(r, DEC); Serial.print(" ");
+  Serial.print("G: "); Serial.print(g, DEC); Serial.print(" ");
+  Serial.print("B: "); Serial.print(b, DEC); Serial.print("\r\n");
+  */
