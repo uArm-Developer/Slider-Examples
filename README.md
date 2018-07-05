@@ -7,7 +7,7 @@
 * **Support carrying count**
 
 ## Caution
-* **UArm must be moved to guidde rail's original position before system charged**
+* **uArm must be moved to guide rail's original position before system charged**
 
 ## Getting Started
 
