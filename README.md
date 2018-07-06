@@ -1,4 +1,4 @@
-# **GuideRail**
+# **Slider**
 ----------
 ## Summary
 * **Support for custom development**
@@ -7,7 +7,7 @@
 * **Support carrying count**
 
 ## Caution
-* **uArm must be moved to guide rail's original position before system charged**
+* **uArm must be moved to Slider's original position before system charged**
 
 ## Getting Started
 
