@@ -1,10 +1,10 @@
 # **Slider**
 ----------
 ## Summary
-* **Support for custom development**
-* **Support carrying blocks**
+* **Support custom development**
+* **Support material carrying**
 * **Support color recognition**
-* **Support carrying count**
+* **Support carrying counting**
 
 ## Caution
 * **uArm must be moved to Slider's original position before system charged**
