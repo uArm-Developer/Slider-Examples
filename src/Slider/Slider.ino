@@ -4,7 +4,8 @@
 #include "Ultrasonic.h"
 
 #define DEVICE_NAME           "Slider\n"
-#define SOFTWARE_VERSION      "V1.1.0\n"
+#define SOFTWARE_VERSION      "V1.2.0\n"
+//#define COLOR_BOX_MODE
 
 rgb_lcd lcd;
 Ultrasonic ultrasonic(10);    // Arduino D10 for Ultrasonic Ranger 
@@ -148,42 +149,90 @@ void rail_move_point(uint32_t step){        // <! control the guide rail move to
 }
 
 bool is_red(uint16_t r, uint16_t g, uint16_t b){        // <! is the red block?
-  if( (r<800) || (r>1500) ){
+  #if defined(COLOR_BOX_MODE)
+    #define RED_MIN       800
+    #define RED_MAX       1500
+    #define GREEN_MIN     200
+    #define GREEN_MAX     1000
+    #define BLUE_MIN      200
+    #define BLUE_MAX      1000
+  #else
+    #define RED_MIN       2500
+    #define RED_MAX       3500
+    #define GREEN_MIN     200
+    #define GREEN_MAX     1500
+    #define BLUE_MIN      200
+    #define BLUE_MAX      1500
+  #endif
+  
+  if( (r<RED_MIN) || (r>RED_MAX) ){
     return false;
   }
-  if( (g<200) || (g>1000) ){
+  if( (g<GREEN_MIN) || (g>GREEN_MAX) ){
     return false;
   }
-  if( (b<200) || (b>1000) ){
+  if( (b<BLUE_MIN) || (b>BLUE_MAX) ){
     return false;
   }
   return true;  
 }
 
 bool is_green(uint16_t r, uint16_t g, uint16_t b){    // <! is the green block?
-  if( (r<500) || (r>1500) ){
+  #if defined(COLOR_BOX_MODE)
+    #define RED_MIN       500
+    #define RED_MAX       1500
+    #define GREEN_MIN     1000
+    #define GREEN_MAX     1800
+    #define BLUE_MIN      200
+    #define BLUE_MAX      1500
+  #else
+    #define RED_MIN       2000
+    #define RED_MAX       3000
+    #define GREEN_MIN     3000
+    #define GREEN_MAX     4000
+    #define BLUE_MIN      1300
+    #define BLUE_MAX      2500
+  #endif
+  
+  if( (r<RED_MIN) || (r>RED_MAX) ){
     return false;
   }
-  if( (g<1000) || (g>1800) ){
+  if( (g<GREEN_MIN) || (g>GREEN_MAX) ){
     return false;
   }
-  if( (b<200) || (b>1500) ){
+  if( (b<BLUE_MIN) || (b>BLUE_MAX) ){
     return false;
   }
-  return true;
+  return true; 
 }
 
 bool is_yellow(uint16_t r, uint16_t g, uint16_t b){   // <! is the yellow block?
-  if( (r<1300) || (r>2500) ){
+  #if defined(COLOR_BOX_MODE)
+    #define RED_MIN       1300
+    #define RED_MAX       2500
+    #define GREEN_MIN     1300
+    #define GREEN_MAX     2500
+    #define BLUE_MIN      500
+    #define BLUE_MAX      1500
+  #else
+    #define RED_MIN       5400
+    #define RED_MAX       6500
+    #define GREEN_MIN     4500
+    #define GREEN_MAX     5500
+    #define BLUE_MIN      1500
+    #define BLUE_MAX      2500
+  #endif
+  
+  if( (r<RED_MIN) || (r>RED_MAX) ){
     return false;
   }
-  if( (g<1300) || (g>2500) ){
+  if( (g<GREEN_MIN) || (g>GREEN_MAX) ){
     return false;
   }
-  if( (b<500) || (b>1500) ){
+  if( (b<BLUE_MIN) || (b>BLUE_MAX) ){
     return false;
   }
-  return true;
+  return true; 
 }
 
 
@@ -201,6 +250,7 @@ void loop() {
       delay(1000);
       if( ultrasonic.MeasureInCentimeters() < 10 ){
         pick_cnt++;
+        Serial.println( "r cnt ++" );
       }     
       uarm_pick_up(); 
       rail_move_point(300000);
@@ -217,6 +267,7 @@ void loop() {
       delay(1000);
       if( ultrasonic.MeasureInCentimeters() < 10 ){
         pick_cnt++;
+        Serial.println( "g cnt ++" );
       }            
       uarm_pick_up(); 
       rail_move_point(300000);
@@ -232,6 +283,7 @@ void loop() {
       rail_move_point(0); 
       if( ultrasonic.MeasureInCentimeters() < 10 ){
          pick_cnt++; 
+         Serial.println( "y cnt ++" );
       }      
       uarm_pick_up(); 
       rail_move_point(300000);
@@ -246,10 +298,14 @@ void loop() {
     pick_cnt = 0;
     lcd.setCursor(8, 1);
     lcd.print("        ");
+    Serial.println( "clear!" );
   }
-/*  
-  Serial.print("R: "); Serial.print(r, DEC); Serial.print(" ");
-  Serial.print("G: "); Serial.print(g, DEC); Serial.print(" ");
-  Serial.print("B: "); Serial.print(b, DEC); Serial.print("\r\n");   
-*/
+
+//  int value = ultrasonic.MeasureInCentimeters();
+//  Serial.println( value );
+  
+//  Serial.print("R: "); Serial.print(r, DEC); Serial.print(" ");
+//  Serial.print("G: "); Serial.print(g, DEC); Serial.print(" ");
+//  Serial.print("B: "); Serial.print(b, DEC); Serial.print("\r\n"); 
+
 }
